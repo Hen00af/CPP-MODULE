@@ -6,7 +6,7 @@
 /*   By: shattori <shattori@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 09:27:13 by shattori          #+#    #+#             */
-/*   Updated: 2025/09/22 17:30:55 by shattori         ###   ########.fr       */
+/*   Updated: 2025/09/24 15:51:36 by shattori         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,14 @@ void Contact::setField(int index, const std::string &value)
 		}
 }
 
-std::string &Contact::getField(int index) const{
+const std::string &Contact::getField(int index) const{
+	static const std::string empty = "";
 	switch (index){
 		case 0: return _firstName;
 		case 1: return _lastName;
 		case 2: return _nickname;
 		case 3: return _phoneNumber;
-		default:		 break;
+		case 4: return _darkestSecret;
+		default: return empty;
 	}
 }

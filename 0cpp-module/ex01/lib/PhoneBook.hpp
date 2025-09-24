@@ -6,28 +6,24 @@
 /*   By: shattori <shattori@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 20:32:08 by shattori          #+#    #+#             */
-/*   Updated: 2025/09/22 15:47:38 by shattori         ###   ########.fr       */
+/*   Updated: 2025/09/24 15:06:23 by shattori         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHONEBOOK_H
-#define PHONEBOOK_H
-
+#ifndef PHONEBOOK_HPP
+#define PHONEBOOK_HPP
 #include <string>
 #include <iostream>
 #include "Contact.hpp"
 
-class phonebook {
+class PhoneBook{
 private:
-Contact contacts[7];
+    Contact contacts[8];  // 8個の連絡先
     int     _index;
     int     _total;
-    char     *_contacts;
-	
 public:
-    phonebook(void);
-    ~phonebook(void);
-
+    PhoneBook();
+    ~PhoneBook(void);
     void add(void);
     void search(void);
     void print(const Contact& contact);
