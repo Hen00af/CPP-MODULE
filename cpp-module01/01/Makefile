@@ -1,11 +1,10 @@
 NAME        := zombie
 
 CXX         := c++
-CXXFLAGS    := -Wall -Wextra -Werror -std=c++98 -pedantic -Ilib
+CXXFLAGS    := -Wall -Wextra -Werror -std=c++98 -pedantic
 SRCS        := main.cpp \
-               newZombie.cpp \
-               randomChump.cpp \
-               Zombie.cpp
+               Zombie.cpp \
+               ZombieHorde.cpp
 OBJS        := $(SRCS:.cpp=.o)
 
 all: $(NAME)

@@ -13,16 +13,16 @@
 #include "PhoneBook.hpp"
 #include <iomanip>
 #include <sstream>
+#define TRUE 	1
+#define FALSE 	0
 
 PhoneBook::PhoneBook() : _index(0), _total(0){
-	
 }
 
 PhoneBook::~PhoneBook() {
-
 }
 
-void PhoneBook::add() {
+int PhoneBook::add() {
 	std::string fields[5] = {
 		"first name",
 		"last name", 
@@ -37,7 +37,10 @@ void PhoneBook::add() {
 	for(int i = 0; i < 5; ++i) {
 		do {
 			std::cout << "Enter " << fields[i] << ": ";
-			std::getline(std::cin, input);
+			if(!std::getline(std::cin, input)){
+				std::cout << std::endl << "EOF detected. Exiting..." << std::endl;
+				return (FALSE);
+			}
 			if (input.empty()) {
 				std::cout << "Field cannot be empty. Please try again." << std::endl;
 			}
@@ -46,7 +49,6 @@ void PhoneBook::add() {
 		newContact.setField(i, input);
 	}
 	
-	// Add contact to phonebook array (circular buffer)
 	contacts[_index] = newContact;
 	_index = (_index + 1) % 8;
 	if (_total < 8) {
@@ -54,41 +56,36 @@ void PhoneBook::add() {
 	}
 	
 	std::cout << "Contact added successfully!" << std::endl;
+	return (TRUE);
 }
 
-
-void PhoneBook::search() {
+int PhoneBook::search() {
 	if (_total == 0) {
 		std::cout << "Phonebook is empty!" << std::endl;
-		return;
+		return TRUE;
 	}
 	
-	// Display header
 	std::cout << std::setw(10) << "Index" << "|";
 	std::cout << std::setw(10) << "First Name" << "|";
 	std::cout << std::setw(10) << "Last Name" << "|";
 	std::cout << std::setw(10) << "Nickname" << std::endl;
 	std::cout << "---------------------------------------------" << std::endl;
 	
-	// Display all contacts
 	for (int i = 0; i < _total; ++i) {
 		std::cout << std::setw(10) << i << "|";
 		
-		// Display first name (truncate if longer than 10 chars)
 		std::string firstName = contacts[i].getField(0);
 		if (firstName.length() > 10) {
 			firstName = firstName.substr(0, 9) + ".";
 		}
 		std::cout << std::setw(10) << firstName << "|";
 		
-		// Display last name (truncate if longer than 10 chars)  
 		std::string lastName = contacts[i].getField(1);
 		if (lastName.length() > 10) {
 			lastName = lastName.substr(0, 9) + ".";
 		}
 		std::cout << std::setw(10) << lastName << "|";
 		
-		// Display nickname (truncate if longer than 10 chars)
 		std::string nickname = contacts[i].getField(2);
 		if (nickname.length() > 10) {
 			nickname = nickname.substr(0, 9) + ".";
@@ -96,15 +93,15 @@ void PhoneBook::search() {
 		std::cout << std::setw(10) << nickname << std::endl;
 	}
 	
-	// Ask for index to display details
 	std::string indexStr;
-	int selectedIndex;
-	
+	int selectedIndex;	
 	do {
 		std::cout << "Enter the index of the contact to display: ";
-		std::getline(std::cin, indexStr);
-		
-		// Convert string to integer
+		if (!std::getline(std::cin, indexStr)){
+				std::cout << std::endl << "EOF detected. Exiting..." << std::endl;
+				std::cin.clear();
+				return (FALSE);
+		}
 		std::stringstream ss(indexStr);
 		if (!(ss >> selectedIndex) || selectedIndex < 0 || selectedIndex >= _total) {
 			std::cout << "Invalid index. Please enter a number between 0 and " 
@@ -113,9 +110,8 @@ void PhoneBook::search() {
 		}
 		break;
 	} while (true);
-	
-	// Display selected contact details
 	print(contacts[selectedIndex]);
+	return (TRUE);
 }
 
 void PhoneBook::print(const Contact& contact) {

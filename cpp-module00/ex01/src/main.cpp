@@ -6,13 +6,15 @@
 /*   By: shattori <shattori@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 20:30:53 by shattori          #+#    #+#             */
-/*   Updated: 2025/09/25 20:28:17 by shattori         ###   ########.fr       */
+/*   Updated: 2025/10/02 01:41:12 by shattori         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.hpp"
 #include <algorithm> 
 #include <cctype>
+#define TRUE 	1
+#define FALSE 	0
 
 int main()
 {
@@ -30,7 +32,6 @@ int main()
 			std::cout << std::endl << "EOF detected. Exiting..." << std::endl;
 			return 0;
 		}
-		
 		// Convert input to uppercase (C++98 compatible way)
 		for (size_t i = 0; i < input.length(); ++i) {
 			input[i] = std::toupper(input[i]);
@@ -40,10 +41,14 @@ int main()
             std::cout << "Goodbye!" << std::endl;
             break;
         }
-        else if (input == "ADD")
-            pb1.add();
-        else if (input == "SEARCH")
-            pb1.search();
+        else if (input == "ADD"){
+            if(pb1.add() == FALSE)
+				break;
+		}
+        else if (input == "SEARCH"){
+            if(pb1.search() == FALSE)
+				break;
+		}
         else
             std::cout << "Invalid command. Use ADD, SEARCH, or EXIT." << std::endl;
 	}

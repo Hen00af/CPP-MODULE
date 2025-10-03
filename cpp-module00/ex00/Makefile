@@ -6,20 +6,28 @@
 #    By: shattori <shattori@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/05 19:59:52 by shattori          #+#    #+#              #
-#    Updated: 2025/08/05 20:07:03 by shattori         ###   ########.fr        #
+#    Updated: 2025/10/02 01:34:13 by shattori         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME		:=	megaphone
+NAME        := megaphone
 
-CXXFLAGS	:=	-Wall -Wextra -Werror 
-CXXFLAGS	+=	-std=c++98 -pedantic
+CXX         := c++
+CXXFLAGS    := -Wall -Wextra -Werror -std=c++98 -pedantic -Ilib
+SRCS        := ./megaphone.cpp
+OBJS        := $(SRCS:.cpp=.o)
 
-SRCS		:=	megaphone.cpp
+all: $(NAME)
 
-$(NAME): $(SRCS)
+$(NAME): $(OBJS)
+	$(CXX) $(CXXFLAGS) $(OBJS) -o $(NAME)
 
-.PHONY: clean
-clean: $(NAME)
-	$(RM) $^
-	
+clean:
+	rm -f $(OBJS)
+
+fclean: clean
+	rm -f $(NAME)
+
+re: fclean all
+
+.PHONY: all clean fclean re
