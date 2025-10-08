@@ -1,20 +1,18 @@
 #ifndef HumanA_HPP 
 #define HumanA_HPP
+
 #include "Weapon.hpp"
 #include <string>
 #include <iostream>
 
-class Zombie {
-private:
-    std::string _name;
+class HumanA {
+	private :
+		std::string name;
+		Weapon& weapon;
+	public:
+		HumanA(std::string name, Weapon& weapon);
+		~HumanA();
+		void attack();
+}; 
 
-public:
-	Zombie();
-	Zombie( std:: string name);
-	~Zombie();
-	void	announce(void);
-	void	setName(std::string name);
-};
-Zombie *ZombieHorde( int N, std::string name );
-Zombie *newZombie( std:: string name);
 #endif

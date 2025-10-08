@@ -1,8 +1,11 @@
-NAME        := HI_THIS_IS_BRAIN
+NAME        := Unnecessary_violence
 
 CXX         := c++
 CXXFLAGS    := -Wall -Wextra -Werror -std=c++98 -pedantic
-SRCS        := main.cpp
+SRCS        := main.cpp \
+               HumanA.cpp \
+               HumanB.cpp \
+               Weapon.cpp
 OBJS        := $(SRCS:.cpp=.o)
 
 all: $(NAME)

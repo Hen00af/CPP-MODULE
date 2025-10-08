@@ -1,10 +1,9 @@
-NAME        := Moar_brainz!
+NAME        := Sed_is_for_losers
 
 CXX         := c++
 CXXFLAGS    := -Wall -Wextra -Werror -std=c++98 -pedantic
-SRCS        := main.cpp \
-               Zombie.cpp \
-               ZombieHorde.cpp
+SRCS        := 	main.cpp \
+				replace.cpp
 OBJS        := $(SRCS:.cpp=.o)
 
 all: $(NAME)

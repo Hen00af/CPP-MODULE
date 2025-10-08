@@ -1,10 +1,9 @@
-NAME        := Moar_brainz!
+NAME        := Harl_filter
 
 CXX         := c++
 CXXFLAGS    := -Wall -Wextra -Werror -std=c++98 -pedantic
-SRCS        := main.cpp \
-               Zombie.cpp \
-               ZombieHorde.cpp
+SRCS        := 	main.cpp \
+				Harl.cpp
 OBJS        := $(SRCS:.cpp=.o)
 
 all: $(NAME)
