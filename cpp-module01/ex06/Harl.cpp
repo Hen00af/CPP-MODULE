@@ -33,7 +33,6 @@ void Harl::filter(std::string level)
 	int i = 0;
 	while (i < 4 && complains[i] != level)
 		i++;
-
 	switch (i)
 	{
 		case 0:
