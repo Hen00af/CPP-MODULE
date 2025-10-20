@@ -16,7 +16,7 @@ Module	内容	主な学習テーマ
 | **CPP01** | メモリと参照の基礎                                    | `new/delete`, `reference`, `pointer`, `stack vs heap`   |  ✅  |
 | **CPP02** | 固定小数点クラスの実装                                  | `operator overloading`, `canonical form`                |  ✅  |
 | **CPP03** | 継承 (Inheritance)                             | `protected`, `superclass/subclass` 設計                   |  ✅  |
-| **CPP04** | 多態性 (Polymorphism)                           | `virtual`, `abstract`, `interface`, `deep copy`         |  ✅  |
+| **CPP04** | 多態性 (Polymorphism)                           | `virtual`, `abstract`, `interface`, `deep copy`         |    |
 | **CPP05** | 例外処理 (Exception)                             | `try/catch`, `throw`, `custom exceptions`               |     |
 | **CPP06** | 型変換 (Casting)                                | `static_cast`, `dynamic_cast`, `reinterpret_cast`       |     |
 | **CPP07** | テンプレートの基礎                                    | `template <typename T>`, `generic programming`          |     |
