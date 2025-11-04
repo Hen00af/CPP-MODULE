@@ -8,8 +8,8 @@
 
 class Fixed {
 private:
-	int 				_fixedPointValue;
-	static const int    _fractionalBits = 8;         
+	int 	x;
+	int		y;
 
 public:
 	Fixed();
@@ -42,7 +42,6 @@ public:
 	Fixed operator++(int);	// postfix
 	Fixed &operator--();
 	Fixed operator--(int);
-
 
 	// min / max
 	static const Fixed &min(const Fixed &a, const Fixed &b);
