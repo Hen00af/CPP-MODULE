@@ -16,12 +16,13 @@
 int main()
 {
 	ClapTrap ct("hoge");
-	ct.attack("Enemy");
-	ct.takeDamage(10);
-	ct.attack("Enemy");
-	ct.beRepaired(10);
-	ct.takeDamage(10);
-	ct.beRepaired(5);
+
+	cp.attack("Enemy");
+	cp.takeDamage(10);
+	cp.attack("Enemy");
+	cp.beRepaired(10);
+	cp.takeDamage(10);
+	cp.beRepaired(5);
 	return 0;
 }
 

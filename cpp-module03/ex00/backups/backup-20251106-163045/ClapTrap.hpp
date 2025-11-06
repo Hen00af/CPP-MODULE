@@ -11,33 +11,29 @@
 /* ************************************************************************** */
 
 #pragma once
-#ifndef CLAPTRAP_HPP
-# define CLAPTRAP_HPP
+#ifnef ClapTrap_HPP
+#define	ClapTrap_HPP
 
 #include <string>
 
-class ClapTrap
-{
+Class ClapTrap{
 private:
 	std::string _name;
-	unsigned int _hit_points;
-	unsigned int _energy_points;
-	unsigned int _attack_damage;
+	unsigned int _hit_potint;
+	unsigned int _energy_point;
+	unsigned int _Attack_point;
 
 	ClapTrap(std::string const &name, unsigned int hit_points,
 			unsigned int energy_points, unsigned int attack_damage);
 
 public:
-	static const unsigned int default_hit_points;
-	static const unsigned int default_energy_points;
-	static const unsigned int default_attack_damage;
-
+	static unsigned int const default_hit_points;
+	static unsigned int const default_energy_points;
+	static unsigned int const default_attack_damege;
+	
 	ClapTrap(std::string const &name = "");
-	~ClapTrap();
-
+	
 	void attack(const std::string& target);
-	void takeDamage(unsigned int amount);
+	void takeDamage(unsigned int amount;
 	void beRepaired(unsigned int amount);
-};
-
-#endif
+}

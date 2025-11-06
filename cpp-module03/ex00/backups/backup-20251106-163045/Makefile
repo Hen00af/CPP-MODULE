@@ -9,8 +9,6 @@ SRCS		+= ClapTrap.cpp
 $(NAME): $(SRCS)
 	$(CXX) $(CXXFLAGS) $^ -o $@
 
-.PHONY: all clean
-all: $(NAME)
-
-clean:
-	$(RM) $(NAME)
+.PHONY: clean
+clean: $(NAME)
+	$(RM) $^
