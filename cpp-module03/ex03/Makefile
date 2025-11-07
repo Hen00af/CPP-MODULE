@@ -1,20 +1,27 @@
 NAME		:= DiamondTrap
 
-CXXFLAGS	:= -Wall -Wextra -Werror
-CXXFLAGS	+= -std=c++98
+CXX		:= c++
+CXXFLAGS	:= -Wall -Wextra -Werror -std=c++98 -pedantic
 
-SRCS		:= main.cpp
-SRCS		+= ClapTrap.cpp
+SRCS		:= main.cpp \
+               ClapTrap.cpp \
+               ScavTrap.cpp \
+               FragTrap.cpp \
+               DiamondTrap.cpp
 
-$(NAME): $(SRCS)
-	$(CXX) $(CXXFLAGS) $^ -o $@
+OBJS		:= $(SRCS:.cpp=.o)
 
-.PHONY: all clean
 all: $(NAME)
 
-fclean: clean all
+$(NAME): $(OBJS)
+	$(CXX) $(CXXFLAGS) $(OBJS) -o $(NAME)
 
 clean:
+	$(RM) $(OBJS)
+
+fclean: clean
 	$(RM) $(NAME)
 
 re: fclean all
+
+.PHONY: all clean fclean re
