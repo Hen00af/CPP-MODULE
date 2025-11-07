@@ -1,31 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   DiamondTrap.hpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: shattori <shattori@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/05 17:43:54 by shattori          #+#    #+#             */
-/*   Updated: 2025/11/06 11:46:02 by shattori         ###   ########.fr       */
+/*   Created: 2025/11/07 21:00:00 by shattori          #+#    #+#             */
+/*   Updated: 2025/11/07 21:00:00 by shattori         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <iostream>
-#include "ClapTrap.hpp"
-#include "ScavTrap.hpp"
+#pragma once
+#ifndef DIAMONDTRAP_HPP
+# define DIAMONDTRAP_HPP
+
 #include "FragTrap.hpp"
+#include "ScavTrap.hpp"
+#include <string>
 
-int main()
-{
-    std::cout << "-----ClapTrap------" << std::endl;
-	ClapTrap ct("c");
-    ct.attack("enermy");
-    ct.takeDamage(100);
-    std::cout << "-----ScavTrap------" << std::endl;
-    ScavTrap st("s");
-    std::cout << "-----FragTrap------" << std::endl;
-    FragTrap ft("f");
-    std::cout << "-----Destractor------" << std::endl;
-	return 0;
-}
+class DiamondTrap : public FragTrap, public ScavTrap {
+private:
+    // Must have the same variable name as ClapTrap's name member (here: _name)
+    std::string _name;
+public:
+    DiamondTrap();
+    DiamondTrap(std::string name);
+    ~DiamondTrap();
 
+    void attack(const std::string &target);
+    void whoAmI();
+};
+
+#endif

@@ -1,16 +1,22 @@
-NAME		:= ClapTrap
+NAME        :=  ScavTrap
+CXX         := c++
+CXXFLAGS    := -Wall -Wextra -Werror -std=c++98 -pedantic
+SRCS        := main.cpp \
+               ClapTrap.cpp \
+			   ScavTrap.cpp
+OBJS        := $(SRCS:.cpp=.o)
 
-CXXFLAGS	:= -Wall -Wextra -Werror
-CXXFLAGS	+= -std=c++98
-
-SRCS		:= main.cpp
-SRCS		+= ClapTrap.cpp
-
-$(NAME): $(SRCS)
-	$(CXX) $(CXXFLAGS) $^ -o $@
-
-.PHONY: all clean
 all: $(NAME)
 
+$(NAME): $(OBJS)
+	$(CXX) $(CXXFLAGS) $(OBJS) -o $(NAME)
+
 clean:
-	$(RM) $(NAME)
+	rm -f $(OBJS)
+
+fclean: clean
+	rm -f $(NAME)
+
+re: fclean all
+
+.PHONY: all clean fclean re

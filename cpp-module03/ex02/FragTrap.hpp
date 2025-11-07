@@ -1,28 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   FragTrap.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: shattori <shattori@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/05 17:43:54 by shattori          #+#    #+#             */
-/*   Updated: 2025/11/06 11:46:02 by shattori         ###   ########.fr       */
+/*   Created: 2025/11/06 21:00:00 by shattori          #+#    #+#             */
+/*   Updated: 2025/11/06 21:00:00 by shattori         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <iostream>
+#pragma once
+#ifndef FRAGTRAP_HPP
+# define FRAGTRAP_HPP
+
 #include "ClapTrap.hpp"
+#include <string>
 
-int main()
-{
-	ClapTrap ct("hoge");
+class FragTrap : public ClapTrap {
+public:
+    FragTrap();
+    FragTrap(std::string name);
+    ~FragTrap();
 
-	cp.attack("Enemy");
-	cp.takeDamage(10);
-	cp.attack("Enemy");
-	cp.beRepaired(10);
-	cp.takeDamage(10);
-	cp.beRepaired(5);
-	return 0;
-}
+    void highFivesGuys();
+};
 
+#endif

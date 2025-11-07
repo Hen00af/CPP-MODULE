@@ -18,11 +18,12 @@
 
 class ClapTrap
 {
-private:
+protected:
 	std::string _name;
 	unsigned int _hit_points;
 	unsigned int _energy_points;
 	unsigned int _attack_damage;
+    
 
 	ClapTrap(std::string const &name, unsigned int hit_points,
 			unsigned int energy_points, unsigned int attack_damage);

@@ -17,17 +17,12 @@ const unsigned int ClapTrap::default_hit_points = 10;
 const unsigned int ClapTrap::default_energy_points = 10;
 const unsigned int ClapTrap::default_attack_damage = 0;
 
-ClapTrap::ClapTrap(std::string const &name, unsigned int hit_points,
-				   unsigned int energy_points, unsigned int attack_damage)
-	: _name(name), _hit_points(hit_points), _energy_points(energy_points), _attack_damage(attack_damage)
-{
-	std::cout << "ClapTrap constructor called: " << _name << std::endl;
-}
 
 ClapTrap::ClapTrap(std::string const &name)
 	: _name(name), _hit_points(default_hit_points), _energy_points(default_energy_points), _attack_damage(default_attack_damage)
 {
 	std::cout << "ClapTrap default constructor called: " << _name << std::endl;
+	is_dead = true;
 }
 
 ClapTrap::~ClapTrap()
@@ -38,8 +33,10 @@ ClapTrap::~ClapTrap()
 void ClapTrap::attack(const std::string &target)
 {
 	std::cout << "ClapTrap " << _name << " ";
-	if (_hit_points == 0)
-		std::cout << "is already dead...";
+	if(is_dead)
+		std::cout << _name << "... is already died ..." << std::endl;
+	else if (_hit_points == 0)
+		std::cout << " ... is already dead...";
 	else if (_energy_points == 0)
 		std::cout << "has no more energy points...";
 	else
@@ -53,9 +50,9 @@ void ClapTrap::attack(const std::string &target)
 void ClapTrap::takeDamage(unsigned int amount)
 {
 	std::cout << "ClapTrap " << _name << " ";
-	if (_hit_points == 0)
+	if (_hit_points == 0 || is_dead)
 	{
-		std::cout << "is already dead..." << std::endl;
+		std::cout << " ... is already dead..." << std::endl;
 		return;
 	}
 	if (_hit_points > amount)
@@ -67,13 +64,16 @@ void ClapTrap::takeDamage(unsigned int amount)
 	{
 		_hit_points = 0;
 		std::cout << "takes " << amount << " points of damage, and died..." << std::endl;
+		this->is_dead = true;
 	}
 }
 
 void ClapTrap::beRepaired(unsigned int amount)
 {
 	std::cout << "ClapTrap " << _name << " ";
-	if (_energy_points == 0)
+	if(is_dead)
+		std::cout << _name << " ... is already died ..." << std::endl;
+	else if (_energy_points == 0)
 	{
 		std::cout << "has no more energy to repair..." << std::endl;
 		return;

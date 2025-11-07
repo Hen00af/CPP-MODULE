@@ -23,9 +23,7 @@ private:
 	unsigned int _hit_points;
 	unsigned int _energy_points;
 	unsigned int _attack_damage;
-
-	ClapTrap(std::string const &name, unsigned int hit_points,
-			unsigned int energy_points, unsigned int attack_damage);
+	bool		 is_dead;
 
 public:
 	static const unsigned int default_hit_points;

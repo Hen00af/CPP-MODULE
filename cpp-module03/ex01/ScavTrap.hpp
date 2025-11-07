@@ -11,14 +11,20 @@
 /* ************************************************************************** */
 
 #pragma once
-#ifndef _ScavTrap_HPP
-#define _ScavTrap_HPP
+#ifndef SCAVTRAP_HPP
+# define SCAVTRAP_HPP
 
-void guardGate();
+#include "ClapTrap.hpp"
+#include <string>
 
-class ClapTrap: public ScavTrap{
-    public:
-    void    guardGate();
+class ScavTrap : public ClapTrap {
+public:
+    ScavTrap();
+    ScavTrap(std::string name);
+    ~ScavTrap();
+
+    void attack(const std::string &target);
+    void guardGate();
 };
 
 #endif
