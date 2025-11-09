@@ -27,3 +27,6 @@ std::string WrongCat::getType() const {
 void WrongCat::makeSound() const {
     std::cout << "Wrong Meow" << std::endl;
 }
+Brain* WrongCat::getBrain() const{
+    return _brain;
+}

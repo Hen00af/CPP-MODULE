@@ -3,6 +3,7 @@
 #define WRONGANIMAL_HPP
 #include <iostream>
 #include <string>
+#include "brain.hpp"
 
 class WrongAnimal{
     public:
@@ -12,8 +13,10 @@ class WrongAnimal{
 
         std::string getType() const;
         void makeSound() const;
+        Brain* getBrain() const;
     protected:
         std::string type;
+        Brain *_brain;
 };
 
 #endif

@@ -24,3 +24,6 @@ std::string WrongAnimal::getType() const {
 void WrongAnimal::makeSound() const {
     std::cout << "<wrong animal sound>" << std::endl;
 }
+Brain* WrongAnimal::getBrain() const{
+    return _brain;
+}

@@ -12,8 +12,10 @@ class WrongCat : public WrongAnimal {
         ~WrongCat();
         std::string getType() const;
         void makeSound() const;
+
+        Brain* getBrain() const;
     private:
-        // no extra members
+        Brain* _brain;
 };
 
 #endif

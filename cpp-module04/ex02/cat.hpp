@@ -3,6 +3,7 @@
 #define CAT_HPP
 #include <iostream>
 #include "animal.hpp"
+#include "brain.hpp"
 
 class Cat : public Animal {
     public:
@@ -13,7 +14,9 @@ class Cat : public Animal {
         //
         std::string getType() const;
         void makeSound() const;
+        Brain* getBrain() const;
     private:
+        Brain* _brain;
 };
 
 #endif
