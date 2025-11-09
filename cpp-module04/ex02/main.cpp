@@ -2,25 +2,24 @@
 #include "animal.hpp"
 #include "dog.hpp"
 #include "cat.hpp"
-#include "brain.hpp"
+#include "wronganimal.hpp"
+#include "wrongcat.hpp"
 
 int main()
 {
-    const int N = 10;
-    Animal* animals[N];
-
-    for (int i = 0; i < N / 2; i++)
-        animals[i] = new Dog();
-
-    for (int i = N / 2; i < N; i++)
-        animals[i] = new Cat();
-
-    for (int i = 0; i < N; i++)
-        delete animals[i];
-
-    Dog basic;
+    std::cout << "\n --------test start -------- \n";
+    std::cout << "\n --------constractor test with no danger-------- \n";
     {
-        Dog tmp = basic;
+        Animal *animal = new Animal;
+        WrongAnimal *wanimal;
+        
+        wanimal = new WrongAnimal;
+        std::cout << "\n --------destractor-------- \n";
+        delete animal;
+        delete wanimal;
+        std::cout << "\n --------constractor test with danger-------- \n";
+        Animal _animal;
+        WrongAnimal _wanimal;
     }
 
     return 0;
