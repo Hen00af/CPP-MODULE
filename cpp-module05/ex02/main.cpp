@@ -1,29 +1,22 @@
-#include <iostream>
 #include "bureaucrat.hpp"
+#include "form.hpp"
 
-int main()
-{
-    try{
-        Bureaucrat alice("alice", 1);
-        std::cout << alice << std::endl;
+int main() {
+    try {
+        Bureaucrat alice("Alice", 50);
+        Bureaucrat bob("Bob", 100);
 
-        Bureaucrat bob("bob", 150);
-        std::cout << bob << std::endl;
+        Form contract("Contract", 75, 50);
 
-        bob.decrementGrade();
+        std::cout << contract << std::endl;
+
+        bob.signForm(contract);
+        alice.signForm(contract);
+
+        std::cout << contract << std::endl;
     }
-    catch (std::exception& e)
-    {
+    catch (const std::exception &e) {
         std::cerr << e.what() << std::endl;
     }
-
-    try{
-        Bureaucrat charlie("charlie", 0);
-    }
-    catch (std::exception& e)
-    {
-        std::cerr << e.what() << std::endl;
-    }
-
-    return 0;
 }
+
