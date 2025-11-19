@@ -21,3 +21,6 @@ std::string Cat::getType() const {
 void Cat::makeSound() const {
     std::cout << "Meow Meow🐱" << std::endl;
 }
+Brain* Cat::getBrain() const{
+    return _brain;
+}
