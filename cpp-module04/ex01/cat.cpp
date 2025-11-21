@@ -12,8 +12,8 @@ Cat::Cat(const Cat &other)
         _brain = new Brain(*other._brain);
     }
 Cat::~Cat() {
-    std::cout << "Cat destructor called" << std::endl;
     delete _brain;
+    std::cout << "Cat destructor called" << std::endl;
 }
 std::string Cat::getType() const {
     return "Cat";

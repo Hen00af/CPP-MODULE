@@ -75,18 +75,18 @@ int main()
     std::cout << "\n=== 8. Dog のコピー内で Brain が別物か検証 ===" << std::endl;
     {
         Dog d1;
-        d1.getBrain()->ideas[0] = "I want meat!";
+        d1.getBrain()->setIdea(0, "I want meat!");
 
         Dog d2 = d1;
 
-        std::cout << "d1 idea: " << d1.getBrain()->ideas[0] << std::endl;
-        std::cout << "d2 idea: " << d2.getBrain()->ideas[0] << std::endl;
+        std::cout << "d1 idea: " << d1.getBrain()->getIdea(0) << std::endl;
+        std::cout << "d2 idea: " << d2.getBrain()->getIdea(0) << std::endl;
 
-        d2.getBrain()->ideas[0] = "I want sleep!";
+        d2.getBrain()->setIdea(0, "I want sleep!");
         std::cout << "After change:" << std::endl;
 
-        std::cout << "d1 idea: " << d1.getBrain()->ideas[0] << std::endl;
-        std::cout << "d2 idea: " << d2.getBrain()->ideas[0] << std::endl;
+        std::cout << "d1 idea: " << d1.getBrain()->getIdea(0) << std::endl;
+        std::cout << "d2 idea: " << d2.getBrain()->getIdea(0) << std::endl;
 
         // ✅ d1 と d2 が独立していれば Deep Copy 成功
     }

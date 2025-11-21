@@ -16,8 +16,8 @@ Dog::Dog(const Dog &other)
 
 Dog::~Dog()
 {
-    std::cout << "Dog destructor called" << std::endl;
     delete _brain;
+    std::cout << "Dog destructor called" << std::endl;
 }
 
 std::string Dog::getType() const {
