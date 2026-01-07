@@ -7,6 +7,8 @@ OBJS = $(SRCS:.cpp=.o)
 all: $(NAME)
 $(NAME): $(OBJS)
 	$(CXX) $(CXXFLAGS) -o $(NAME) $(OBJS)
+	~`mkdir obj
+	mv *.o ./obj
 debug: CXXFLAGS += -g -fsanitize=address -fno-omit-frame-pointer
 debug: re
 clean:

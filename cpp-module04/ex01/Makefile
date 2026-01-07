@@ -7,6 +7,8 @@ OBJS = $(SRCS:.cpp=.o)
 all: $(NAME)
 $(NAME): $(OBJS)
 	$(CXX) $(CXXFLAGS) -o $(NAME) $(OBJS)
+	mkdir obj
+	mv *.o ./obj
 clean:
 	rm -f $(OBJS)
 fclean: clean
