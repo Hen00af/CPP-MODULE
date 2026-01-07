@@ -1,6 +1,6 @@
 #include "IMateriaSource.hpp"
 
-virtual ~IMateriaSource()
+IMateriaSource::~IMateriaSource()
 {
 	std::cout << "Materia Distructor is called" << std::endl;
 }

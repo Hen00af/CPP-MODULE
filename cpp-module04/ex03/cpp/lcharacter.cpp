@@ -1,6 +1,6 @@
 #include "Icharacter.hpp"
 
-virtual ~Icharacter()
+ICharacter::~ICharacter()
 {
 	std::cout << "IMateriaSource Distructor is called" << std::endl;
 }
