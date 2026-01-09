@@ -1,12 +1,14 @@
 CXX      = c++
-CXXFLAGS = -Wall -Wextra -Werror -std=c++98 -pedantic
+CXXFLAGS = -Wall -Wextra -Werror -std=c++98 -pedantic -Ih
 
 NAME   = interface_recap
 OBJDIR = obj
 
 SRCS = cpp/Aclass.cpp \
-       cpp/lMateriaSource.cpp \
-       cpp/lcharacter.cpp \
+       cpp/Ice.cpp \
+       cpp/Cure.cpp \
+       cpp/Character.cpp \
+       cpp/MateriaSource.cpp \
        cpp/main.cpp
 
 OBJS = $(SRCS:cpp/%.cpp=$(OBJDIR)/%.o)
