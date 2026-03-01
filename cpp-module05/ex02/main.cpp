@@ -6,7 +6,7 @@ int main() {
         Bureaucrat alice("Alice", 50);
         Bureaucrat bob("Bob", 100);
 
-        Form contract("Contract", 75, 50);
+        AForm contract("Contract", 75, 50);
 
         std::cout << contract << std::endl;
 
