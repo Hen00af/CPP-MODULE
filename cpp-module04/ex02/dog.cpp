@@ -29,6 +29,10 @@ Brain* Dog::getBrain() const {
     return _brain;
 }
 
+std::string Dog::getType() const {
+    return "Dog";
+}
+
 void Dog::makeSound() const {
     std::cout << "Woof!" << std::endl;
 }
