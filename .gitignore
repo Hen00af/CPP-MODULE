@@ -1,2 +1,5 @@
 *.pdf
 sub
+*.o
+*.d
+*.pdf*
