@@ -9,10 +9,11 @@ class ShrubberyCreationForm : public AForm
 {
     private:
         std::string _target;
+        void executeAction() const;
     public:
         // canonical
         ShrubberyCreationForm(const std::string &target);
         ShrubberyCreationForm(const ShrubberyCreationForm &other);
         ~ShrubberyCreationForm();
-}
+};
 #endif
