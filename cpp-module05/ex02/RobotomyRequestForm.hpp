@@ -7,10 +7,12 @@ class RobotomyRequestForm : public AForm
 {
     private:
         std::string _target;
-        public:
+        void executeAction() const;
+    public:
         // canonical
         RobotomyRequestForm(const std::string &target);
-        RobotomyRequestForm(const RobotomyRequestForm &other);  
-}
+        RobotomyRequestForm(const RobotomyRequestForm &other);
+        ~RobotomyRequestForm();
+};
 
 #endif
