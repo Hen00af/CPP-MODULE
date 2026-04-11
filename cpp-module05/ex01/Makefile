@@ -1,10 +1,10 @@
 # **************************************************************************** #
-# MAKEFILE for ex01 - build using ../ex00/bureaucrat.cpp
+# MAKEFILE for ex01
 # Targets: all, clean, fclean, re
 # **************************************************************************** #
 
 CXX = c++
-CXXFLAGS = -Wall -Wextra -Werror -std=c++98 -I../ex01
+CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 DEPFLAGS = -MMD -MP
 NAME = form-up!
 SRCS = main.cpp ./bureaucrat.cpp ./form.cpp
