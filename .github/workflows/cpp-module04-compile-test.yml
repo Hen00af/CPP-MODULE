@@ -7,6 +7,7 @@ on:
   pull_request:
     branches: [main]
     paths: ["cpp-module04/**"]
+  workflow_dispatch:
 
 jobs:
   compile:
