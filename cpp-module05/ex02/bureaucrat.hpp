@@ -38,7 +38,8 @@ public:
         const char* what() const throw();
     };
 
-    void signForm(class AForm &form);
+    void signForm(AForm &form);
+    void executeForm(const AForm &form) const;
 };
 
 std::ostream& operator<<(std::ostream& os, const Bureaucrat& b);

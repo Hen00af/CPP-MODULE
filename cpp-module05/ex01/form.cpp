@@ -10,6 +10,19 @@ Form::Form(const std::string &name, int gradeToSign, int gradeToExecute)
         throw Form::GradeTooLowException();
 }
 
+Form::Form(const Form &other)
+    : _name(other._name), _gradeToSign(other._gradeToSign),
+      _gradeToExecute(other._gradeToExecute), _isSigned(other._isSigned)
+{
+}
+
+Form &Form::operator=(const Form &other)
+{
+    if (this != &other)
+        _isSigned = other._isSigned;
+    return *this;
+}
+
 Form::~Form()
 {
 }

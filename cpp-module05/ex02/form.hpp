@@ -15,11 +15,14 @@ class AForm
         const int  _gradeToExecute;
         bool _isSigned;
         virtual void executeAction() const = 0;
-        void execute(const Bureaucrat &executor) const;
 
     public:
-    AForm(const std::string &name, int gradeToSign, int gradeToExecute);
-    ~AForm();
+        AForm(const std::string &name, int gradeToSign, int gradeToExecute);
+        AForm(const AForm &other);
+        AForm &operator=(const AForm &other);
+        ~AForm();
+
+        void execute(const Bureaucrat &executor) const;
 
         const std::string &getName() const;
         bool getIsSigned() const;
@@ -40,6 +43,12 @@ class AForm
         public:
             const char* what() const throw() {
                 return "Form already signed";
+            }
+        };
+        class FormNotSignedException : public std::exception {
+        public:
+            const char* what() const throw() {
+                return "Form is not signed";
             }
         };
 

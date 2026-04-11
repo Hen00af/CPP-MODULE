@@ -12,10 +12,20 @@ int main()
         Bureaucrat bob("bob", 150);
         std::cout << bob << std::endl;
 
-        bob.decrementGrade();
-        std::cout << bob << std::endl;
         bob.incrementGrade();
         std::cout << bob << std::endl;
+        bob.decrementGrade();
+        std::cout << bob << std::endl;
+    }
+    catch (std::exception& e)
+    {
+        std::cerr << e.what() << std::endl;
+    }
+
+    try{
+        std::cout << "bob decrement at 150" << std::endl;
+        Bureaucrat bob("bob", 150);
+        bob.decrementGrade();
     }
     catch (std::exception& e)
     {
