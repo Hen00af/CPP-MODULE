@@ -1,13 +1,13 @@
 # **************************************************************************** #
-# MAKEFILE for ex02
+# MAKEFILE for ex03
 # Targets: all, clean, fclean, re
 # **************************************************************************** #
 
 CXX = c++
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 DEPFLAGS = -MMD -MP
-NAME = form-up!
-SRCS = main.cpp ./bureaucrat.cpp ./form.cpp ./ShrubberyCreationForm.cpp ./RobotomyRequestForm.cpp ./PresidentialPardonForm.cpp ./inte
+NAME = intern!
+SRCS = main.cpp ./bureaucrat.cpp ./form.cpp ./ShrubberyCreationForm.cpp ./RobotomyRequestForm.cpp ./PresidentialPardonForm.cpp ./Intern.cpp
 OBJS = $(SRCS:.cpp=.o)
 DEPS = $(SRCS:.cpp=.d)
 RM = rm -f
