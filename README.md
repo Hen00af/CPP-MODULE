@@ -17,8 +17,8 @@ Module	内容	主な学習テーマ
 | **CPP02** | 固定小数点クラスの実装                                  | `operator overloading`, `canonical form`                |  ✅  |
 | **CPP03** | 継承 (Inheritance)                             | `protected`, `superclass/subclass` 設計                   |  ✅  |
 | **CPP04** | 多態性 (Polymorphism)                           | `virtual`, `abstract`, `interface`, `deep copy`         |  ✅  |
-| **CPP05** | 例外処理 (Exception)                             | `try/catch`, `throw`, `custom exceptions`               |     |
-| **CPP06** | 型変換 (Casting)                                | `static_cast`, `dynamic_cast`, `reinterpret_cast`       |     |
-| **CPP07** | テンプレートの基礎                                    | `template <typename T>`, `generic programming`          |     |
-| **CPP08** | STL (Standard Template Library)              | `vector`, `stack`, `iterator`, `algorithm`              |     |
-| **CPP09** | 実践的課題（フォードジョンソン・アルゴリズム, 仮想通貨データ, 逆ポーランド記法電卓） | `RPN (Reverse Polish Notation)`, `BitcoinExchange`      |     |
+| **CPP05** | 例外処理 (Exception)                             | `try/catch`, `throw`, `custom exceptions`               |  ✅  |
+| **CPP06** | 型変換 (Casting)                                | `static_cast`, `dynamic_cast`, `reinterpret_cast`       |  ✅  |
+| **CPP07** | テンプレートの基礎                                    | `template <typename T>`, `generic programming`          |  ✅  |
+| **CPP08** | STL (Standard Template Library)              | `vector`, `stack`, `iterator`, `algorithm`              |  ✅  |
+| **CPP09** | 実践的課題（フォードジョンソン・アルゴリズム, 仮想通貨データ, 逆ポーランド記法電卓） | `RPN (Reverse Polish Notation)`, `BitcoinExchange`      |  ✅  |
