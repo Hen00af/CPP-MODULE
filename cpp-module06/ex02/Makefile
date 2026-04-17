@@ -3,7 +3,7 @@
 # **************************************************************************** #
 
 CXX = c++
-CXXFLAGS = -Wall -Wextra -Werror -std=c++98
+CXXFLAGS = -Wall -Wextra -Werror -std=c++98 --pedantic
 DEPFLAGS = -MMD -MP
 NAME = identify
 SRCS = main.cpp Base.cpp
