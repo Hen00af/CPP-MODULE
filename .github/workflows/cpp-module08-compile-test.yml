@@ -1,0 +1,47 @@
+name: "cpp-module08: Compile Test"
+
+on:
+  push:
+    branches: [main]
+    paths: ["cpp-module08/**"]
+  pull_request:
+    branches: [main]
+    paths: ["cpp-module08/**"]
+  workflow_dispatch:
+
+jobs:
+  compile:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Compile all exercises in cpp-module08
+        run: |
+          FAILED=0
+          PASSED=0
+          MODULE="cpp-module08"
+
+          for makefile in $(find "$MODULE" -name "Makefile" | sort); do
+            dir="$(dirname "$makefile")"
+            printf "  %-40s" "$dir"
+
+            if make -C "$dir" fclean > /dev/null 2>&1 && make -C "$dir" > /dev/null 2>&1; then
+              echo "OK"
+              PASSED=$((PASSED + 1))
+              make -C "$dir" fclean > /dev/null 2>&1
+            else
+              echo "FAIL"
+              echo "--- Error output for $dir ---"
+              make -C "$dir" fclean 2>/dev/null; make -C "$dir" 2>&1 | tail -20
+              echo "--- End ---"
+              FAILED=$((FAILED + 1))
+              make -C "$dir" fclean > /dev/null 2>&1
+            fi
+          done
+
+          echo ""
+          echo "Results: $PASSED passed, $FAILED failed"
+          if [ "$FAILED" -gt 0 ]; then
+            echo "::error::$FAILED exercise(s) failed to compile in $MODULE"
+            exit 1
+          fi
