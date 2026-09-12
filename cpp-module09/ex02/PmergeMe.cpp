@@ -35,222 +35,204 @@ void PmergeMe::parseArgs(int argc, char **argv)
 		throw std::runtime_error("Error");
 }
 
-size_t PmergeMe::jacobsthal(size_t n)
+// ========== vector implementation ==========
+
+void PmergeMe::mergeInsertSortVec(std::vector<int> &arr, std::size_t &step)
 {
-	if (n == 0) return 0;
-	if (n == 1) return 1;
-	size_t prev2 = 0;
-	size_t prev1 = 1;
-	for (size_t i = 2; i <= n; i++)
-	{
-		size_t curr = prev1 + 2 * prev2;
-		prev2 = prev1;
-		prev1 = curr;
-	}
-	return prev1;
+	std::vector<Element> elements;
+	for (std::size_t i = 0; i < arr.size(); ++i)
+		elements.push_back(Element(arr[i], i));
+	sortElementsVec(elements, step);
+	for (std::size_t i = 0; i < arr.size(); ++i)
+		arr[i] = elements[i].value;
 }
 
-// ========== Vector implementation ==========
-
-void PmergeMe::binaryInsertVec(std::vector<int> &chain, int value, size_t maxPos)
+void PmergeMe::binaryInsertVec(std::vector<Element> &chain,
+	const Element &element, std::size_t maxPos, std::size_t &step)
 {
-	size_t lo = 0;
-	size_t hi = maxPos;
-	if (hi > chain.size())
-		hi = chain.size();
+	std::size_t lo = 0;
+	std::size_t hi = maxPos;
 	while (lo < hi)
 	{
-		size_t mid = lo + (hi - lo) / 2;
-		if (chain[mid] < value)
+		std::size_t mid = lo + (hi - lo) / 2;
+		++step;
+		if (chain[mid].value < element.value)
 			lo = mid + 1;
 		else
 			hi = mid;
 	}
-	chain.insert(chain.begin() + static_cast<long>(lo), value);
+	chain.insert(chain.begin() + static_cast<std::ptrdiff_t>(lo), element);
 }
 
-void PmergeMe::mergeInsertSortVec(std::vector<int> &arr)
+void PmergeMe::sortElementsVec(std::vector<Element> &arr, std::size_t &step)
 {
-	size_t n = arr.size();
-	if (n <= 1)
+	if (arr.size() <= 1)
 		return;
 
-	// Step 1: Form pairs and compare
-	std::vector<std::pair<int, int> > pairs;
-	bool hasStraggler = (n % 2 != 0);
-	int straggler = 0;
-	if (hasStraggler)
-		straggler = arr[n - 1];
-
-	for (size_t i = 0; i + 1 < n; i += 2)
+	// Keep each pair linked by identity, even when values are equal.
+	std::vector<Element> largers;
+	std::vector<Element> smallers;
+	for (std::size_t i = 0; i + 1 < arr.size(); i += 2)
 	{
-		if (arr[i] > arr[i + 1])
-			pairs.push_back(std::make_pair(arr[i], arr[i + 1]));
+		++step;
+		if (arr[i].value > arr[i + 1].value)
+		{
+			largers.push_back(arr[i]);
+			smallers.push_back(arr[i + 1]);
+		}
 		else
-			pairs.push_back(std::make_pair(arr[i + 1], arr[i]));
-	}
-
-	// Step 2: Recursively sort by larger element
-	std::vector<int> largers;
-	for (size_t i = 0; i < pairs.size(); i++)
-		largers.push_back(pairs[i].first);
-	mergeInsertSortVec(largers);
-
-	// Reorder pairs to match sorted largers
-	std::vector<int> smallers;
-	for (size_t i = 0; i < largers.size(); i++)
-	{
-		for (size_t j = 0; j < pairs.size(); j++)
 		{
-			if (pairs[j].first == largers[i])
-			{
-				smallers.push_back(pairs[j].second);
-				pairs.erase(pairs.begin() + static_cast<long>(j));
-				break;
-			}
+			largers.push_back(arr[i + 1]);
+			smallers.push_back(arr[i]);
 		}
 	}
+	const std::vector<Element> partners(largers);
+	sortElementsVec(largers, step);
 
-	// Step 3: Build main chain from sorted largers, insert first smaller
-	std::vector<int> chain(largers);
-	chain.insert(chain.begin(), smallers[0]);
-
-	// Step 4: Insert remaining smallers using Jacobsthal sequence
-	std::vector<bool> inserted(smallers.size(), false);
-	inserted[0] = true;
-
-	size_t jIdx = 2;
-	while (true)
+	std::vector<Element> pending;
+	for (std::size_t i = 0; i < largers.size(); ++i)
 	{
-		size_t jVal = jacobsthal(jIdx);
-		size_t prevJ = jacobsthal(jIdx - 1);
-		if (prevJ >= smallers.size())
+		std::size_t j = 0;
+		while (partners[j].id != largers[i].id)
+			++j;
+		pending.push_back(smallers[j]);
+	}
+	// The unpaired element is the final pending item, with no upper bound.
+	if (arr.size() % 2 != 0)
+		pending.push_back(arr.back());
+
+	std::vector<Element> chain(largers);
+	chain.insert(chain.begin(), pending[0]);
+
+	// One-based pending order: 1, 3, 2, 5, 4, 11, 10, ..., 6, ...
+	std::size_t previous = 1;
+	std::size_t boundary = 3;
+	while (previous < pending.size())
+	{
+		const std::size_t end = boundary < pending.size() ? boundary : pending.size();
+		for (std::size_t k = end; k > previous; --k)
+		{
+			const std::size_t idx = k - 1;
+			std::size_t maxPos = chain.size();
+			if (idx < largers.size())
+			{
+				maxPos = 0;
+				while (chain[maxPos].id != largers[idx].id)
+					++maxPos;
+			}
+			// Exclude the partner: pending[idx] <= its partner is already known.
+			binaryInsertVec(chain, pending[idx], maxPos, step);
+		}
+		if (end == pending.size())
 			break;
-		size_t end = jVal;
-		if (end > smallers.size())
-			end = smallers.size();
-		for (size_t k = end; k > prevJ; k--)
-		{
-			size_t idx = k - 1;
-			if (idx < smallers.size() && !inserted[idx])
-			{
-				binaryInsertVec(chain, smallers[idx], chain.size());
-				inserted[idx] = true;
-			}
-		}
-		jIdx++;
+		// Saturate at the pending size to avoid Jacobsthal arithmetic overflow.
+		const std::size_t remaining = pending.size() - boundary;
+		const std::size_t next = previous > remaining / 2
+			? pending.size() : boundary + 2 * previous;
+		previous = boundary;
+		boundary = next;
 	}
-
-	// Insert any remaining
-	for (size_t i = 0; i < smallers.size(); i++)
-	{
-		if (!inserted[i])
-			binaryInsertVec(chain, smallers[i], chain.size());
-	}
-
-	// Step 5: Insert straggler
-	if (hasStraggler)
-		binaryInsertVec(chain, straggler, chain.size());
-
-	arr = chain;
+	arr.swap(chain);
 }
 
-// ========== Deque implementation ==========
+// ========== deque implementation ==========
 
-void PmergeMe::binaryInsertDeq(std::deque<int> &chain, int value, size_t maxPos)
+void PmergeMe::mergeInsertSortDeq(std::deque<int> &arr, std::size_t &step)
 {
-	size_t lo = 0;
-	size_t hi = maxPos;
-	if (hi > chain.size())
-		hi = chain.size();
+	std::deque<Element> elements;
+	for (std::size_t i = 0; i < arr.size(); ++i)
+		elements.push_back(Element(arr[i], i));
+	sortElementsDeq(elements, step);
+	for (std::size_t i = 0; i < arr.size(); ++i)
+		arr[i] = elements[i].value;
+}
+
+void PmergeMe::binaryInsertDeq(std::deque<Element> &chain,
+	const Element &element, std::size_t maxPos, std::size_t &step)
+{
+	std::size_t lo = 0;
+	std::size_t hi = maxPos;
 	while (lo < hi)
 	{
-		size_t mid = lo + (hi - lo) / 2;
-		if (chain[mid] < value)
+		std::size_t mid = lo + (hi - lo) / 2;
+		++step;
+		if (chain[mid].value < element.value)
 			lo = mid + 1;
 		else
 			hi = mid;
 	}
-	chain.insert(chain.begin() + static_cast<long>(lo), value);
+	chain.insert(chain.begin() + static_cast<std::ptrdiff_t>(lo), element);
 }
 
-void PmergeMe::mergeInsertSortDeq(std::deque<int> &arr)
+void PmergeMe::sortElementsDeq(std::deque<Element> &arr, std::size_t &step)
 {
-	size_t n = arr.size();
-	if (n <= 1)
+	if (arr.size() <= 1)
 		return;
 
-	std::deque<std::pair<int, int> > pairs;
-	bool hasStraggler = (n % 2 != 0);
-	int straggler = 0;
-	if (hasStraggler)
-		straggler = arr[n - 1];
-
-	for (size_t i = 0; i + 1 < n; i += 2)
+	// Keep each pair linked by identity, even when values are equal.
+	std::deque<Element> largers;
+	std::deque<Element> smallers;
+	for (std::size_t i = 0; i + 1 < arr.size(); i += 2)
 	{
-		if (arr[i] > arr[i + 1])
-			pairs.push_back(std::make_pair(arr[i], arr[i + 1]));
+		++step;
+		if (arr[i].value > arr[i + 1].value)
+		{
+			largers.push_back(arr[i]);
+			smallers.push_back(arr[i + 1]);
+		}
 		else
-			pairs.push_back(std::make_pair(arr[i + 1], arr[i]));
-	}
-
-	std::deque<int> largers;
-	for (size_t i = 0; i < pairs.size(); i++)
-		largers.push_back(pairs[i].first);
-	mergeInsertSortDeq(largers);
-
-	std::deque<int> smallers;
-	for (size_t i = 0; i < largers.size(); i++)
-	{
-		for (size_t j = 0; j < pairs.size(); j++)
 		{
-			if (pairs[j].first == largers[i])
-			{
-				smallers.push_back(pairs[j].second);
-				pairs.erase(pairs.begin() + static_cast<long>(j));
-				break;
-			}
+			largers.push_back(arr[i + 1]);
+			smallers.push_back(arr[i]);
 		}
 	}
+	const std::deque<Element> partners(largers);
+	sortElementsDeq(largers, step);
 
-	std::deque<int> chain(largers.begin(), largers.end());
-	chain.push_front(smallers[0]);
-
-	std::vector<bool> inserted(smallers.size(), false);
-	inserted[0] = true;
-
-	size_t jIdx = 2;
-	while (true)
+	std::deque<Element> pending;
+	for (std::size_t i = 0; i < largers.size(); ++i)
 	{
-		size_t jVal = jacobsthal(jIdx);
-		size_t prevJ = jacobsthal(jIdx - 1);
-		if (prevJ >= smallers.size())
+		std::size_t j = 0;
+		while (partners[j].id != largers[i].id)
+			++j;
+		pending.push_back(smallers[j]);
+	}
+	// The unpaired element is the final pending item, with no upper bound.
+	if (arr.size() % 2 != 0)
+		pending.push_back(arr.back());
+
+	std::deque<Element> chain(largers);
+	chain.insert(chain.begin(), pending[0]);
+
+	// One-based pending order: 1, 3, 2, 5, 4, 11, 10, ..., 6, ...
+	std::size_t previous = 1;
+	std::size_t boundary = 3;
+	while (previous < pending.size())
+	{
+		const std::size_t end = boundary < pending.size() ? boundary : pending.size();
+		for (std::size_t k = end; k > previous; --k)
+		{
+			const std::size_t idx = k - 1;
+			std::size_t maxPos = chain.size();
+			if (idx < largers.size())
+			{
+				maxPos = 0;
+				while (chain[maxPos].id != largers[idx].id)
+					++maxPos;
+			}
+			// Exclude the partner: pending[idx] <= its partner is already known.
+			binaryInsertDeq(chain, pending[idx], maxPos, step);
+		}
+		if (end == pending.size())
 			break;
-		size_t end = jVal;
-		if (end > smallers.size())
-			end = smallers.size();
-		for (size_t k = end; k > prevJ; k--)
-		{
-			size_t idx = k - 1;
-			if (idx < smallers.size() && !inserted[idx])
-			{
-				binaryInsertDeq(chain, smallers[idx], chain.size());
-				inserted[idx] = true;
-			}
-		}
-		jIdx++;
+		// Saturate at the pending size to avoid Jacobsthal arithmetic overflow.
+		const std::size_t remaining = pending.size() - boundary;
+		const std::size_t next = previous > remaining / 2
+			? pending.size() : boundary + 2 * previous;
+		previous = boundary;
+		boundary = next;
 	}
-
-	for (size_t i = 0; i < smallers.size(); i++)
-	{
-		if (!inserted[i])
-			binaryInsertDeq(chain, smallers[i], chain.size());
-	}
-
-	if (hasStraggler)
-		binaryInsertDeq(chain, straggler, chain.size());
-
-	arr = chain;
+	arr.swap(chain);
 }
 
 // ========== Public interface ==========
@@ -258,7 +240,7 @@ void PmergeMe::mergeInsertSortDeq(std::deque<int> &arr)
 void PmergeMe::printBefore() const
 {
 	std::cout << "Before:";
-	for (size_t i = 0; i < _vec.size(); i++)
+	for (std::size_t i = 0; i < _vec.size(); i++)
 		std::cout << " " << _vec[i];
 	std::cout << std::endl;
 }
@@ -266,7 +248,7 @@ void PmergeMe::printBefore() const
 void PmergeMe::printAfter() const
 {
 	std::cout << "After:";
-	for (size_t i = 0; i < _vec.size(); i++)
+	for (std::size_t i = 0; i < _vec.size(); i++)
 		std::cout << " " << _vec[i];
 	std::cout << std::endl;
 }
@@ -277,15 +259,17 @@ void PmergeMe::sort()
 
 	// Sort with vector
 	std::vector<int> vecCopy(_vec);
+	std::size_t stepVec = 0;
 	clock_t startVec = clock();
-	mergeInsertSortVec(vecCopy);
+	mergeInsertSortVec(vecCopy, stepVec);
 	clock_t endVec = clock();
 	double timeVec = static_cast<double>(endVec - startVec) / CLOCKS_PER_SEC * 1000000.0;
 
 	// Sort with deque
 	std::deque<int> deqCopy(_deq);
+	std::size_t stepDeq = 0;
 	clock_t startDeq = clock();
-	mergeInsertSortDeq(deqCopy);
+	mergeInsertSortDeq(deqCopy, stepDeq);
 	clock_t endDeq = clock();
 	double timeDeq = static_cast<double>(endDeq - startDeq) / CLOCKS_PER_SEC * 1000000.0;
 
@@ -297,4 +281,6 @@ void PmergeMe::sort()
 		<< " elements with std::vector : " << timeVec << " us" << std::endl;
 	std::cout << "Time to process a range of " << deqCopy.size()
 		<< " elements with std::deque : " << timeDeq << " us" << std::endl;
+	std::cout << "Steps (element comparisons) with std::vector : " << stepVec << std::endl;
+	std::cout << "Steps (element comparisons) with std::deque : " << stepDeq << std::endl;
 }
